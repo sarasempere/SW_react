@@ -7,7 +7,7 @@ const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 
 module.exports = merge(common, {
     mode: 'development',
-    devtool: 'cheap-module-source-map',
+    devtool: '#eval-source-map',
     devServer: {
         contentBase:  './dist',
         hot: true,
