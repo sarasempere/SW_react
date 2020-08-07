@@ -6,7 +6,10 @@ import R2 from "../../img/R2-D2.jpg";
 import C3 from "../../img/C-3PO.jpg";
 import darth from "../../img/Darth Vader.jpg";
 import biggs from "../../img/Biggs Darklighter.jpg";
+import chiwaca from "../../img/chiwaca.jpg";
+import yoda from "../../img/yoda.jpg";
 import { array } from "prop-types";
+import { Button } from "react-bootstrap";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -46,6 +49,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				{
 					name: "Biggs Darklighter",
 					img: biggs
+				},
+				{
+					name: "Chewbacca",
+					img: chiwaca
+				},
+				{
+					name: "Yoda",
+					img: yoda
 				}
 			]
 		},
@@ -58,11 +69,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			loadAllPeople: async () => {
 				//let dataNext = data.next;
 				let char = [];
+				//let pages = 1;
 				let url = "https://swapi.dev/api/people/";
 				for (let i = 0; i < 8; i++) {
 					let response = await fetch(url);
 					let respJson = await response.json();
+					console.log(respJson);
 					let urlReplace = respJson.next;
+					//pages = parseInt(urlReplace.count) / 10;
 					url = urlReplace.replace("http", "https");
 					respJson.results.map(item => {
 						char.push(item);
@@ -90,10 +104,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ planets: plan });
 			},
 
+			favSelectButton: props => {
+				console.log(props);
+
+				//document.getElementById("idnum").background.color = "red";
+				//name.setAttribute("disabled", "false");
+			},
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();
-
 				//we have to loop the entire demo array to look for the respective index
 				//and change its color
 				const demo = store.demo.map((elm, i) => {
@@ -105,16 +125,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 
-			addFavorites: name => {
+			filterPeople: item => {
+				const store = getStore();
+				const itemToLowerCase = item.toLowerCase();
+				let contain = [];
+				const exist = store.characters.map(fav => {
+					let name = fav.name.toLowerCase();
+					if (name.indexOf(itemToLowerCase) !== -1) {
+						contain.push(fav);
+						return setStore({ characters: contain });
+					}
+				});
+			},
+
+			addFavorites: (name, button) => {
 				const store = getStore();
 				const exist = store.favorites.filter(fav => fav === name);
 				if (exist.length === 0) {
 					return setStore({ favorites: [...store.favorites, name] });
-				} else {
-					return setStore({ favorites: store.favorites });
 				}
-
-				console.log(store.favorites);
+				button.classList.add("active");
+				console.log(event);
 			},
 
 			removeFavorite: name => {
@@ -173,8 +204,8 @@ export default getState;
 						return error;
 					});
             },
-            
-            
+
+
             loadPeople: () => {
 				fetch("https://swapi.dev/api/people/", {
 					method: "GET",
@@ -200,8 +231,8 @@ export default getState;
 						return error;
 					});
             },
-            
-            
+
+
 			loadPlanets: () => {
 				fetch("https://swapi.dev/api/planets/", {
 					method: "GET",

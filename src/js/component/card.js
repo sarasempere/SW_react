@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { Navbar } from "../component/navbar";
+import { Button } from "../component/button";
+import { ActiveButton } from "../component/activebutton";
 import beru from "../../img/Beru.jpg";
 import Leia from "../../img/Leia.jpg";
 import starw from "../../img/starw.jpg";
@@ -10,6 +11,8 @@ import R2 from "../../img/R2-D2.jpg";
 import C3 from "../../img/C-3PO.jpg";
 import darth from "../../img/Darth Vader.jpg";
 import biggs from "../../img/Biggs Darklighter.jpg";
+import chiwaca from "../../img/chiwaca.jpg";
+import yoda from "../../img/yoda.jpg";
 
 export const Card = l => {
 	const { store, actions } = useContext(Context);
@@ -28,15 +31,7 @@ export const Card = l => {
 					<Link to={"/single/" + l.id}>
 						<button className="btn btn-primary">Info</button>
 					</Link>
-					<span
-						onClick={() => {
-							actions.addFavorites(l.name);
-							//console.log(store.favorites);fav={store.favorites.name}
-						}}
-						type="button"
-						id="fav"
-						className="btn btn-outline-warning fab fa-gratipay"
-					/>
+					<Button name={l.name} id={l.id} />
 				</div>
 			</div>
 		</div>

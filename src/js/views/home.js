@@ -31,5 +31,5 @@ export const Home = () => {
 	);
 };
 
-/* 16 //className="row"
+/* 
 */

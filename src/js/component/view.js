@@ -8,7 +8,7 @@ export const View = l => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="card w-75">
+		<div className="card w-75 large">
 			<img src={info} className="info" alt="..." />
 			<div className="card-header">Info adicional</div>
 			<div className="card-body">
